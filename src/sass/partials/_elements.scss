@@ -1,1 +1,29 @@
+/* Buttons */
 
+.btn-primary {
+  @include btn($color-dark, $color-light, $color-dark);
+}
+
+.btn-secondary {
+  @include btn($color-main, $color-light, $color-main);
+}
+
+.btn-quantity {
+  @include btn($color-dark, $color-light, $color-dark);
+  vertical-align: top;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  line-height: 26px;
+  font-size: 10px;
+
+  &--lt {
+    @include btn($color-light, $color-main, $color-light);
+    padding: 0;
+    width: 24px;
+    height: 18px;
+    line-height: 16px;
+    font-size: 10px;
+    opacity: 0;
+  }
+}
