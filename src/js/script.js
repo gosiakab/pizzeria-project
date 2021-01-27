@@ -68,6 +68,7 @@
 
       console.log("new Product:", thisProduct);
     }
+
     renderInMenu() {
       const thisProduct = this;
 
@@ -76,7 +77,7 @@
       console.log("HTML generated!");
 
       /* create element using utils.createElementFromHTML */
-      thisProduct.element = utils.createDOMfromHTML(generatedHTML);
+      thisProduct.element = utils.createDOMFromHTML(generatedHTML);
 
       /* find menu container */
       const menuContainer = document.querySelector(select.containerOf.menu);
@@ -115,7 +116,7 @@
       const thisProduct = this;
 
       thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
-      thisProduct.amountWidgetElem.addEventListener("update", function (event) {
+      thisProduct.amountWidgetElem.addEventListener("update", function () {
         thisProduct.processOrder();
       });
     }
@@ -199,17 +200,19 @@
           /* save the element in param.options with key optionId as const option */
           const option = param.options[optionId];
 
-          const selectedOption =
+          const optionSelected =
             formData[paramId] && formData[paramId].includes(optionId);
 
           /* START IF: if option is selected and option is not default */
-          if (selectedOption) {
-            if (!option.default == true) {
-              price = price + 0;
-            } else if (!option.default == true) {
-              price = price + option.price;
-            } else if (!option.default == true) {
-              price = price - option.price;
+          if (optionSelected) {
+            if (!option.default) {
+              console.log("Price didn't change!");
+            } else if (!option.default) {
+              price += option.price;
+              console.log("Price added up to:", price);
+            } else if (!option.default) {
+              price -= option.price;
+              console.log("Price substracted:", price);
             }
 
             const image = thisProduct.imageWrapper.querySelector(
@@ -257,9 +260,9 @@
       thisWidget.linkIncrease = thisWidget.element.querySelector(
         select.widgets.amount.linkIncrease
       );
-      thisWidget.value = thisWidget.element.querySelector(
-        settings.amountWidget.defaultValue
-      );
+      //thisWidget.value = thisWidget.element.querySelector(
+      //settings.amountWidget.defaultValue
+      //);
     }
 
     setValue(value) {
@@ -276,15 +279,15 @@
     initActions() {
       const thisWidget = this;
 
-      thisWidget.input.addEventListener("change", function (event) {
+      thisWidget.input.addEventListener("change", function () {
         thisWidget.setValue(thisWidget.input.value);
       });
 
-      thisWidget.linkDecrease.addEventListener("click", function (event) {
+      thisWidget.linkDecrease.addEventListener("click", function () {
         thisWidget.setValue(thisWidget.value - 1);
       });
 
-      thisWidget.linkIncrease.addEventListener("click", function (event) {
+      thisWidget.linkIncrease.addEventListener("click", function () {
         thisWidget.setValue(thisWidget.value + 1);
       });
     }
