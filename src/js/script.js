@@ -126,35 +126,38 @@
       const thisProduct = this;
 
       /* find the clickable trigger (the element that should react to clicking) */
-      const clickableTrigger = thisProduct.element.querySelector(
+      const accordionTrigger = thisProduct.element.querySelector(
         select.menuProduct.clickable
       );
       /* START: click event listener to trigger */
-      clickableTrigger.addEventListener("click", function (event) {
+      accordionTrigger.addEventListener("click", function (event) {
         /* prevent default action for event */
         event.preventDefault();
 
         /* toggle active class on element of thisProduct */
-        thisProduct.element.classlist.toggle("active");
+        // thisProduct.element.classlist.toggle("active");
 
         /* find all active products */
-        const activeProducts = document.querySelectorAll(
-          select.all.menuProductsActive
-        );
+        const activeProducts = document.querySelectorAll(".product.active");
+        //select.all.menuProductsActive
+        //);
 
         /* START LOOP: for each active product */
         for (let activeProduct of activeProducts) {
           /* START: if the active product isn't the element of thisProduct */
-          if (activeProduct != null && activeProduct != thisProduct.element) {
+          if (activeProduct !== null && activeProduct != thisProduct.element) {
             /* remove class active for the active product */
             activeProduct.classlist.remove("active");
 
             /* END: if the active product isn't the element of thisProduct */
           }
-
-          /* END LOOP: for each active product */
         }
+        /* END LOOP: for each active product */
+        //  }
         /* END: click event listener to trigger */
+        thisProduct.element.classList.toggle(
+          classNames.menuProduct.wrapperActive
+        );
       });
     }
 
@@ -202,13 +205,12 @@
 
           /* START IF: if option is selected and option is not default */
           if (optionSelected) {
-            if (!option.default) {
-              console.log("Price didn't change!");
-            } else if (!option.default) {
-              price += option.price;
+            if (!option.default == true) {
+              price = price + option.price;
+
               console.log("Price added up to:", price);
-            } else if (!option.default) {
-              price -= option.price;
+            } else if (option.default == true) {
+              price = price - option.price;
               console.log("Price substracted:", price);
             }
 
