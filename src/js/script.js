@@ -115,10 +115,11 @@
     initAmountWidget() {
       const thisProduct = this;
 
-      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
+      //thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
       thisProduct.amountWidgetElem.addEventListener("update", function () {
         thisProduct.processOrder();
       });
+      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
     }
 
     initAccordion() {
@@ -128,11 +129,8 @@
       const clickableTrigger = thisProduct.element.querySelector(
         select.menuProduct.clickable
       );
-
       /* START: click event listener to trigger */
       clickableTrigger.addEventListener("click", function (event) {
-        console.log("Clicked!");
-
         /* prevent default action for event */
         event.preventDefault();
 
@@ -140,12 +138,12 @@
         thisProduct.element.classlist.toggle("active");
 
         /* find all active products */
-        const allActiveProducts = document.querySelector(
+        const activeProducts = document.querySelectorAll(
           select.all.menuProductsActive
         );
 
         /* START LOOP: for each active product */
-        for (let activeProduct of allActiveProducts) {
+        for (let activeProduct of activeProducts) {
           /* START: if the active product isn't the element of thisProduct */
           if (activeProduct != null && activeProduct != thisProduct.element) {
             /* remove class active for the active product */
@@ -156,7 +154,6 @@
 
           /* END LOOP: for each active product */
         }
-
         /* END: click event listener to trigger */
       });
     }
@@ -219,9 +216,11 @@
               "." + paramId + "-" + optionId
             );
             if (image) {
-              image.classList.add(classNames.menuProduct.imageVisible);
-            } else {
-              image.classlist.remove(classNames.menuProduct.imageVisible);
+              if (optionSelected) {
+                image.classList.add(classNames.menuProduct.imageVisible);
+              } else {
+                image.classlist.remove(classNames.menuProduct.imageVisible);
+              }
             }
           }
         }
@@ -249,7 +248,7 @@
 
     getElements(element) {
       const thisWidget = this;
-
+      thisWidget.value = settings.amountWidget.defaultValue;
       thisWidget.element = element;
       thisWidget.input = thisWidget.element.querySelector(
         select.widgets.amount.input
@@ -270,9 +269,15 @@
       const newValue = parseInt(value);
 
       /*TODO: Add validation */
-
-      thisWidget.value = newValue;
-      thisWidget.announce();
+      if (
+        thisWidget.value !== newValue &&
+        !isNaN(newValue) &&
+        newValue >= settings.amountWidget.defaultMin &&
+        newValue <= settings.amountWidget.defaultMax
+      ) {
+        thisWidget.value = newValue;
+        thisWidget.announce();
+      }
       thisWidget.input.value = thisWidget.value;
     }
 
@@ -301,9 +306,21 @@
   }
 
   const app = {
+    initData: function () {
+      const thisApp = this;
+
+      thisApp.data = dataSource;
+    },
+
     initMenu: function () {
-      const testProduct = new Product();
-      console.log("testProduct:", testProduct);
+      const thisApp = this;
+      console.log("thisApp.data:", thisApp.data);
+
+      for (let productData in thisApp.data.products) {
+        new Product(productData, thisApp.data.products[productData]);
+        //const testProduct = new Product();
+        //console.log("testProduct:", testProduct);
+      }
     },
     init: function () {
       const thisApp = this;
@@ -312,7 +329,7 @@
       console.log("classNames:", classNames);
       console.log("settings:", settings);
       console.log("templates:", templates);
-
+      thisApp.initData();
       thisApp.initMenu();
     },
   };
