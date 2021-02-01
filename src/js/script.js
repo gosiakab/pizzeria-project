@@ -115,7 +115,6 @@
     initAmountWidget() {
       const thisProduct = this;
 
-      //thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
       thisProduct.amountWidgetElem.addEventListener("update", function () {
         thisProduct.processOrder();
       });
@@ -135,12 +134,9 @@
         event.preventDefault();
 
         /* toggle active class on element of thisProduct */
-        // thisProduct.element.classlist.toggle("active");
 
         /* find all active products */
         const activeProducts = document.querySelectorAll(".product.active");
-        //select.all.menuProductsActive
-        //);
 
         /* START LOOP: for each active product */
         for (let activeProduct of activeProducts) {
@@ -153,7 +149,7 @@
           }
         }
         /* END LOOP: for each active product */
-        //  }
+
         /* END: click event listener to trigger */
         thisProduct.element.classList.toggle(
           classNames.menuProduct.wrapperActive
@@ -201,28 +197,32 @@
           const option = param.options[optionId];
 
           const optionSelected =
-            formData[paramId] && formData[paramId].includes(optionId);
+            formData.hasOwnProperty(paramId) &&
+            formData[paramId].indexOf(optionId) > -1;
 
           /* START IF: if option is selected and option is not default */
-          if (optionSelected) {
-            if (!option.default == true) {
-              price = price + option.price;
+          if (optionSelected && !option.default) {
+            /* add price of option to variable price */
 
-              console.log("Price added up to:", price);
-            } else if (option.default == true) {
-              price = price - option.price;
-              console.log("Price substracted:", price);
-            }
+            price += option.price;
+            console.log("Price added up to:", price);
 
-            const image = thisProduct.imageWrapper.querySelector(
-              "." + paramId + "-" + optionId
-            );
-            if (image) {
-              if (optionSelected) {
-                image.classList.add(classNames.menuProduct.imageVisible);
-              } else {
-                image.classlist.remove(classNames.menuProduct.imageVisible);
-              }
+            /* START ELSE IF: if option is not selected and option is default */
+          } else if (!optionSelected && option.default) {
+            /* deduct price of option from price */
+
+            price -= option.price;
+            console.log("Price substracted:", price);
+          }
+
+          const image = thisProduct.imageWrapper.querySelector(
+            "." + paramId + "-" + optionId
+          );
+          if (image) {
+            if (optionSelected) {
+              image.classList.add(classNames.menuProduct.imageVisible);
+            } else {
+              image.classList.remove(classNames.menuProduct.imageVisible);
             }
           }
         }
@@ -235,7 +235,6 @@
       thisProduct.priceElem.innerHTML = price;
     }
   }
-
   class AmountWidget {
     constructor(element) {
       const thisWidget = this;
@@ -261,9 +260,6 @@
       thisWidget.linkIncrease = thisWidget.element.querySelector(
         select.widgets.amount.linkIncrease
       );
-      //thisWidget.value = thisWidget.element.querySelector(
-      //settings.amountWidget.defaultValue
-      //);
     }
 
     setValue(value) {
@@ -320,8 +316,6 @@
 
       for (let productData in thisApp.data.products) {
         new Product(productData, thisApp.data.products[productData]);
-        //const testProduct = new Product();
-        //console.log("testProduct:", testProduct);
       }
     },
     init: function () {
