@@ -128,6 +128,7 @@
       const accordionTrigger = thisProduct.element.querySelector(
         select.menuProduct.clickable
       );
+
       /* START: click event listener to trigger */
       accordionTrigger.addEventListener("click", function (event) {
         /* prevent default action for event */
@@ -143,12 +144,13 @@
           /* START: if the active product isn't the element of thisProduct */
           if (activeProduct !== null && activeProduct != thisProduct.element) {
             /* remove class active for the active product */
-            activeProduct.classlist.remove("active");
+            activeProduct.classList.remove("active");
 
             /* END: if the active product isn't the element of thisProduct */
           }
+
+          /* END LOOP: for each active product */
         }
-        /* END LOOP: for each active product */
 
         /* END: click event listener to trigger */
         thisProduct.element.classList.toggle(
@@ -170,6 +172,7 @@
           thisProduct.processOrder();
         });
       }
+
       thisProduct.cartButton.addEventListener("click", function (event) {
         event.preventDefault();
         thisProduct.processOrder();
@@ -203,14 +206,12 @@
           /* START IF: if option is selected and option is not default */
           if (optionSelected && !option.default) {
             /* add price of option to variable price */
-
             price += option.price;
             console.log("Price added up to:", price);
 
             /* START ELSE IF: if option is not selected and option is default */
           } else if (!optionSelected && option.default) {
             /* deduct price of option from price */
-
             price -= option.price;
             console.log("Price substracted:", price);
           }
@@ -318,6 +319,7 @@
         new Product(productData, thisApp.data.products[productData]);
       }
     },
+
     init: function () {
       const thisApp = this;
       console.log("*** App starting ***");
