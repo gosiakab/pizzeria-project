@@ -147,9 +147,6 @@
       thisProduct.amountWidgetElem = thisProduct.element.querySelector(
         select.menuProduct.amountWidget
       );
-      // thisCart.dom.productList = thisCart.dom.element.querySelector(
-      //  select.cart.productList
-      //  );
     }
 
     initAmountWidget() {
