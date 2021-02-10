@@ -262,7 +262,7 @@
             // if (image) {
             if (optionSelected) {
               if (!thisProduct.params[paramId]) {
-                thisProduct.params[paramID] = {
+                thisProduct.params[paramId] = {
                   label: param.label,
                   options: {},
                 };
@@ -406,6 +406,15 @@
       /* create element using utils.createElementFromHTML */
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
       console.log("adding product", menuProduct);
+
+      /* find cart container */
+      thisCart.dom.productList = document.querySelector(
+        select.containerOf.cart
+      );
+
+      /* add DOM element to thisCart.dom.productList */
+
+      thisCart.dom.productList.appendChild(generatedDOM);
     }
   }
 
