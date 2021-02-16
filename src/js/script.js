@@ -403,9 +403,9 @@
 
     add(menuProduct) {
       const thisCart = this;
-      thisCart.dom = {};
+     // thisCart.dom = {};
       /* generate HTML based on template */
-      const generatedHTML = templates.cartProduct(menuProduct.data);
+      const generatedHTML = templates.cartProduct(menuProduct);
 
       /* create element using utils.createElementFromHTML */
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
