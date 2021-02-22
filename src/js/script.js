@@ -388,6 +388,7 @@
       thisCart.dom.productList = thisCart.dom.wrapper.querySelector(
         select.cart.productList
       );
+   
     }
 
     initActions() {
@@ -411,17 +412,18 @@
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
       console.log('adding product', menuProduct);
 
-      /* find cart container */
-      thisCart.dom.productList = document.querySelector(
-        select.containerOf.cart
-      );
+    thisCart.products.push(menuProduct);
+     console.log('thisCart.products', thisCart.products);
 
       /* add DOM element to thisCart.dom.productList */
 
       thisCart.dom.productList.appendChild(generatedDOM);
+
+      
     }
   }
 
+  
   const app = {
     initData: function () {
       const thisApp = this;
