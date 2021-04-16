@@ -254,31 +254,31 @@
             /* deduct price of option from price */
             price -= option.price;
             console.log("Price substracted:", price);
-            // }
+          }
 
-            const images = thisProduct.imageWrapper.querySelector(
-              "." + paramId + "-" + optionId
-            );
-            // if (image) {
-            if (optionSelected) {
-              if (!thisProduct.params[paramId]) {
-                thisProduct.params[paramId] = {
-                  label: param.label,
-                  options: {},
-                };
-              }
-              thisProduct.params[paramId].options[optionId] = option.label;
-              for (let image of images) {
-                image.classList.add(classNames.menuProduct.imageVisible);
-              }
-            } else {
-              for (let image of images) {
-                image.classList.remove(classNames.menuProduct.imageVisible);
-              }
+          const images = thisProduct.imageWrapper.querySelectorAll(
+            "." + paramId + "-" + optionId
+          );
+          //if (image) {
+          if (optionSelected) {
+            if (!thisProduct.params[paramId]) {
+              thisProduct.params[paramId] = {
+                label: param.label,
+                options: {},
+              };
+            }
+            thisProduct.params[paramId].options[optionId] = option.label;
+            for (let image of images) {
+              image.classList.add(classNames.menuProduct.imageVisible);
+            }
+          } else {
+            for (let image of images) {
+              image.classList.remove(classNames.menuProduct.imageVisible);
             }
           }
         }
       }
+
       console.log("thisProduct.params", thisProduct.params);
       /* multiply price by amount */
       thisProduct.priceSingle = price;
