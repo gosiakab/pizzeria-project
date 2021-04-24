@@ -264,7 +264,7 @@
           const images = thisProduct.imageWrapper.querySelectorAll(
             "." + paramId + "-" + optionId
           );
-          //if (image) {
+
           if (optionSelected) {
             if (!thisProduct.params[paramId]) {
               thisProduct.params[paramId] = {
@@ -449,7 +449,7 @@
         products: [],
       };
       for (let product of thisCart.products) {
-        playload.products.push(product.getData());
+        payload.products.push(product.getData());
       }
 
       const options = {
@@ -646,7 +646,6 @@
       console.log("settings:", settings);
       console.log("templates:", templates);
       thisApp.initData();
-      // thisApp.initMenu();
     },
 
     initCart: function () {
