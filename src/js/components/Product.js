@@ -1,6 +1,6 @@
-import { select, classNames, templates } from './settings.js';
-import utils from './utils.js';
-import AmountWidget from './components/AmountWidget.js';
+import { select, classNames, templates } from "../settings.js";
+import utils from "../utils.js";
+import AmountWidget from "./components/AmountWidget.js";
 
 class Product {
   constructor(id, data) {
@@ -16,7 +16,7 @@ class Product {
     thisProduct.initAmountWidget();
     thisProduct.processOrder();
 
-    console.log('new Product:', thisProduct);
+    console.log("new Product:", thisProduct);
   }
 
   renderInMenu() {
@@ -24,7 +24,7 @@ class Product {
 
     /* generate HTML based on template */
     const generatedHTML = templates.menuProduct(thisProduct.data);
-    console.log('HTML generated!');
+    console.log("HTML generated!");
 
     /* create element using utils.createElementFromHTML */
     thisProduct.element = utils.createDOMFromHTML(generatedHTML);
@@ -65,7 +65,7 @@ class Product {
   initAmountWidget() {
     const thisProduct = this;
 
-    thisProduct.amountWidgetElem.addEventListener('updated', function () {
+    thisProduct.amountWidgetElem.addEventListener("updated", function () {
       thisProduct.processOrder();
     });
     thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
@@ -80,21 +80,21 @@ class Product {
     );
 
     /* START: click event listener to trigger */
-    accordionTrigger.addEventListener('click', function (event) {
+    accordionTrigger.addEventListener("click", function (event) {
       /* prevent default action for event */
       event.preventDefault();
 
       /* toggle active class on element of thisProduct */
 
       /* find all active products */
-      const activeProducts = document.querySelectorAll('.product.active');
+      const activeProducts = document.querySelectorAll(".product.active");
 
       /* START LOOP: for each active product */
       for (let activeProduct of activeProducts) {
         /* START: if the active product isn't the element of thisProduct */
         if (activeProduct !== null && activeProduct != thisProduct.element) {
           /* remove class active for the active product */
-          activeProduct.classList.remove('active');
+          activeProduct.classList.remove("active");
 
           /* END: if the active product isn't the element of thisProduct */
         }
@@ -112,18 +112,18 @@ class Product {
   initOrderForm() {
     const thisProduct = this;
 
-    thisProduct.form.addEventListener('submit', function (event) {
+    thisProduct.form.addEventListener("submit", function (event) {
       event.preventDefault();
       thisProduct.processOrder();
     });
 
     for (let input of thisProduct.formInputs) {
-      input.addEventListener('change', function () {
+      input.addEventListener("change", function () {
         thisProduct.processOrder();
       });
     }
 
-    thisProduct.cartButton.addEventListener('click', function (event) {
+    thisProduct.cartButton.addEventListener("click", function (event) {
       event.preventDefault();
       thisProduct.processOrder();
       thisProduct.addToCart();
@@ -135,7 +135,7 @@ class Product {
 
     /* read all data from the form (using utils.serializeFormToObject) and save it to const formData */
     const formData = utils.serializeFormToObject(thisProduct.form);
-    console.log('formData', formData);
+    console.log("formData", formData);
 
     thisProduct.params = {};
 
@@ -160,17 +160,17 @@ class Product {
         if (optionSelected && !option.default) {
           /* add price of option to variable price */
           price += option.price;
-          console.log('Price added up to:', price);
+          console.log("Price added up to:", price);
 
           /* START ELSE IF: if option is not selected and option is default */
         } else if (!optionSelected && option.default) {
           /* deduct price of option from price */
           price -= option.price;
-          console.log('Price substracted:', price);
+          console.log("Price substracted:", price);
         }
 
         const images = thisProduct.imageWrapper.querySelectorAll(
-          '.' + paramId + '-' + optionId
+          "." + paramId + "-" + optionId
         );
 
         if (optionSelected) {
@@ -192,7 +192,7 @@ class Product {
       }
     }
 
-    console.log('thisProduct.params', thisProduct.params);
+    console.log("thisProduct.params", thisProduct.params);
     /* multiply price by amount */
     thisProduct.priceSingle = price;
     thisProduct.price =
@@ -210,7 +210,7 @@ class Product {
 
     //app.cart.add(thisProduct);
 
-    const event = new CustomEvent('add-to-cart', {
+    const event = new CustomEvent("add-to-cart", {
       bubbles: true,
       detail: {
         product: thisProduct,
