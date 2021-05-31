@@ -1,11 +1,11 @@
-import { settings, select } from './settings.js';
+import { settings, select } from "../settings.js";
 
 class AmountWidget {
   constructor(element) {
     const thisWidget = this;
 
-    console.log('AmountWidget:', thisWidget);
-    console.log('constructor arguments:', element);
+    console.log("AmountWidget:", thisWidget);
+    console.log("constructor arguments:", element);
 
     thisWidget.getElements(element);
     thisWidget.setValue(thisWidget.input.value);
@@ -47,15 +47,15 @@ class AmountWidget {
   initActions() {
     const thisWidget = this;
 
-    thisWidget.input.addEventListener('change', function () {
+    thisWidget.input.addEventListener("change", function () {
       thisWidget.setValue(thisWidget.input.value);
     });
 
-    thisWidget.linkDecrease.addEventListener('click', function () {
+    thisWidget.linkDecrease.addEventListener("click", function () {
       thisWidget.setValue(thisWidget.value - 1);
     });
 
-    thisWidget.linkIncrease.addEventListener('click', function () {
+    thisWidget.linkIncrease.addEventListener("click", function () {
       thisWidget.setValue(thisWidget.value + 1);
     });
   }
@@ -63,7 +63,7 @@ class AmountWidget {
   announce() {
     const thisWidget = this;
 
-    const event = new CustomEvent('updated', {
+    const event = new CustomEvent("updated", {
       bubbles: true,
     });
     thisWidget.element.dispatchEvent(event);
