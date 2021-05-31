@@ -1,6 +1,6 @@
-import { settings, select, classNames, templates } from './settings.js';
-import utils from './utils.js';
-import CartProduct from './components/CartProduct.js';
+import { settings, select, classNames, templates } from "../settings.js";
+import utils from "../utils.js";
+import CartProduct from "./components/CartProduct.js";
 
 class Cart {
   constructor(element) {
@@ -10,7 +10,7 @@ class Cart {
 
     thisCart.getElements(element);
     thisCart.initActions();
-    console.log('new Cart', thisCart);
+    console.log("new Cart", thisCart);
   }
 
   getElements(element) {
@@ -26,10 +26,10 @@ class Cart {
     );
     thisCart.dom.deliveryFee = element.querySelector(select.cart.deliveryFee);
     thisCart.renderTotalsKeys = [
-      'totalNumber',
-      'totalPrice',
-      'subtotalPrice',
-      'deliveryFee',
+      "totalNumber",
+      "totalPrice",
+      "subtotalPrice",
+      "deliveryFee",
     ];
 
     for (let key of thisCart.renderTotalsKeys) {
@@ -47,17 +47,17 @@ class Cart {
   initActions() {
     const thisCart = this;
 
-    thisCart.dom.toggleTrigger.addEventListener('click', function () {
-      console.log('thisCart.dom.wrapper', thisCart.dom.wrapper);
+    thisCart.dom.toggleTrigger.addEventListener("click", function () {
+      console.log("thisCart.dom.wrapper", thisCart.dom.wrapper);
       thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
     });
-    thisCart.dom.productList.addEventListener('updated', function () {
+    thisCart.dom.productList.addEventListener("updated", function () {
       thisCart.update();
     });
-    thisCart.dom.productList.addEventListener('remove', function (event) {
+    thisCart.dom.productList.addEventListener("remove", function (event) {
       thisCart.remove(event.detail.cartProduct);
     });
-    thisCart.dom.form.addEventListener('submit', function (event) {
+    thisCart.dom.form.addEventListener("submit", function (event) {
       event.preventDefault();
       thisCart.sendOrder();
     });
@@ -65,7 +65,7 @@ class Cart {
 
   sendOrder() {
     const thisCart = this;
-    const url = settings.db.url + '/' + settings.db.order;
+    const url = settings.db.url + "/" + settings.db.order;
 
     const payload = {
       totalPrice: thisCart.totalPrice,
@@ -81,9 +81,9 @@ class Cart {
     }
 
     const options = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
     };
@@ -98,14 +98,14 @@ class Cart {
 
     /* create element using utils.createElementFromHTML */
     const generatedDOM = utils.createDOMFromHTML(generatedHTML);
-    console.log('adding product', menuProduct);
+    console.log("adding product", menuProduct);
 
     /* add DOM element to thisCart.dom.productList */
 
     thisCart.dom.productList.appendChild(generatedDOM);
 
     thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
-    console.log('thisCart.products', thisCart.products);
+    console.log("thisCart.products", thisCart.products);
     thisCart.update();
   }
 
@@ -122,9 +122,9 @@ class Cart {
     thisCart.totalPrice = thisCart.subtotalPrice = thisCart.deliveryFee;
     thisCart.dom.subtotalPrice.innerHTML = thisCart.subtotalPrice;
     thisCart.dom.totalNumber.innerHTML = thisCart.totalNumber;
-    console.log('totalPrice', thisCart.totalPrice);
-    console.log('subtotalPrice', thisCart.subtotalPrice);
-    console.log('totalNumber', thisCart.totalNumber);
+    console.log("totalPrice", thisCart.totalPrice);
+    console.log("subtotalPrice", thisCart.subtotalPrice);
+    console.log("totalNumber", thisCart.totalNumber);
 
     for (let key of thisCart.renderTotalsKeys) {
       for (let elem of thisCart.dom[key]) {
