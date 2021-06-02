@@ -1,5 +1,5 @@
-import { select } from "../settings.js";
-import AmountWidget from "./components/AmountWidget.js";
+import { select } from '../settings.js';
+import AmountWidget from './AmountWidget.js';
 
 class CartProduct {
   constructor(menuProduct, element) {
@@ -15,8 +15,8 @@ class CartProduct {
     thisCartProduct.getElements(element);
     thisCartProduct.initAmountWidget();
     thisCartProduct.initActions();
-    console.log("new CartProduct", thisCartProduct);
-    console.log("productData", menuProduct);
+    console.log('new CartProduct', thisCartProduct);
+    console.log('productData', menuProduct);
   }
 
   getData() {
@@ -52,7 +52,7 @@ class CartProduct {
     );
 
     thisCartProduct.dom.amountWidgetElem.addEventListener(
-      "updated",
+      'updated',
       function () {
         thisCartProduct.amount = thisCartProduct.amountWidget.value;
         thisCartProduct.price =
@@ -64,7 +64,7 @@ class CartProduct {
   remove() {
     const thisCartProduct = this;
 
-    const event = new CustomEvent("remove", {
+    const event = new CustomEvent('remove', {
       bubbles: true,
       detail: {
         cartProduct: thisCartProduct,
@@ -76,10 +76,10 @@ class CartProduct {
   initActions() {
     const thisCartProduct = this;
 
-    thisCartProduct.dom.edit.addEventListener("click", function (event) {
+    thisCartProduct.dom.edit.addEventListener('click', function (event) {
       event.preventDefault();
     });
-    thisCartProduct.dom.remove.addEventListener("click", function (event) {
+    thisCartProduct.dom.remove.addEventListener('click', function (event) {
       event.preventDefault();
       thisCartProduct.remove();
     });
