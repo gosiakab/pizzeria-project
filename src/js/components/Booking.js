@@ -209,6 +209,27 @@ class Booking {
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(
       select.booking.tables
     );
+
+    //pobierz przycisk submit z formularza cart_order//
+    thisBooking.dom.formSubmit = thisBooking.dom.wrapper.querySelector(
+      select.booking.formSubmit
+    );
+
+    thisBooking.dom.formSubmit.addEventListener("click", function (event) {
+      event.preventDefault();
+      thisBooking.sendBooking();
+    });
+
+    thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(
+      select.booking.phone
+    );
+    thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(
+      select.booking.address
+    );
+    //starters//
+    thisBooking.dom.starters = thisBooking.dom.wrapper.querySelectorAll(
+      select.booking.starters
+    );
   }
 
   initWidgets() {
@@ -273,8 +294,8 @@ class Booking {
       duration: parseInt(thisBooking.hoursAmount.value),
       ppl: parseInt(thisBooking.peopleAmount.value),
       starters: [],
-      phone: thisBooking.dom.phone.value,
-      address: thisBooking.dom.address.value,
+      phone: thisBooking.dom.phone,
+      address: thisBooking.dom.address,
     };
 
     for (let starter of thisBooking.dom.starters) {
