@@ -311,7 +311,15 @@ class Booking {
       body: JSON.stringify(playload),
     };
 
-    fetch(url, options);
+    fetch(url, options)
+      .then(function () {
+        //usun klase//
+
+        thisBooking.getData();
+      })
+      .then(function () {
+        thisBooking.removeSelected();
+      });
   }
 }
 export default Booking;
