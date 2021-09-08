@@ -1,8 +1,8 @@
-import { templates, select, settings, classNames } from "../settings.js";
-import utils from "../utils.js";
-import AmountWidget from "./AmountWidget.js";
-import DatePicker from "./DatePicker.js";
-import HourPicker from "./HourPicker.js";
+import { templates, select, settings, classNames } from '../settings.js';
+import utils from '../utils.js';
+import AmountWidget from './AmountWidget.js';
+import DatePicker from './DatePicker.js';
+import HourPicker from './HourPicker.js';
 
 class Booking {
   constructor(element) {
@@ -21,12 +21,12 @@ class Booking {
 
     const startDateParam =
       settings.db.dateStartParamKey +
-      "=" +
+      '=' +
       utils.dateToStr(thisBooking.datePicker.minDate);
 
     const endDateParam =
       settings.db.dateEndParamKey +
-      "=" +
+      '=' +
       utils.dateToStr(thisBooking.datePicker.maxDate);
 
     const params = {
@@ -40,22 +40,22 @@ class Booking {
     const urls = {
       booking:
         settings.db.url +
-        "/" +
+        '/' +
         settings.db.booking +
-        "?" +
-        params.booking.join("&"),
+        '?' +
+        params.booking.join('&'),
       eventsCurrent:
         settings.db.url +
-        "/" +
+        '/' +
         settings.db.event +
-        "?" +
-        params.eventsCurrent.join("&"),
+        '?' +
+        params.eventsCurrent.join('&'),
       eventsRepeat:
         settings.db.url +
-        "/" +
+        '/' +
         settings.db.event +
-        "?" +
-        params.eventsRepeat.join("&"),
+        '?' +
+        params.eventsRepeat.join('&'),
     };
     //console.log("getData urls", urls);
 
@@ -99,7 +99,7 @@ class Booking {
     const maxDate = thisBooking.datePicker.maxDate;
 
     for (let item of eventsRepeat) {
-      if (item.repeat == "daily") {
+      if (item.repeat == 'daily') {
         for (
           let loopDate = minDate;
           loopDate <= maxDate;
@@ -123,7 +123,7 @@ class Booking {
   makeBooked(date, hour, duration, table) {
     const thisBooking = this;
 
-    if (typeof thisBooking.booked[date] == "undefined") {
+    if (typeof thisBooking.booked[date] == 'undefined') {
       thisBooking.booked[date] = {};
     }
 
@@ -136,7 +136,7 @@ class Booking {
     ) {
       //console.log("loop", hourBlock);
 
-      if (typeof thisBooking.booked[date][hourBlock] == "undefined") {
+      if (typeof thisBooking.booked[date][hourBlock] == 'undefined') {
         thisBooking.booked[date][hourBlock] = [];
       }
 
@@ -153,9 +153,9 @@ class Booking {
     let allAvailable = false;
 
     if (
-      typeof thisBooking.booked[thisBooking.date] == "undefined" ||
+      typeof thisBooking.booked[thisBooking.date] == 'undefined' ||
       typeof thisBooking.booked[thisBooking.date][thisBooking.hour] ==
-        "undefined"
+        'undefined'
     ) {
       allAvailable = true;
     }
@@ -215,7 +215,7 @@ class Booking {
       select.booking.formSubmit
     );
 
-    thisBooking.dom.formSubmit.addEventListener("click", function (event) {
+    thisBooking.dom.formSubmit.addEventListener('click', function (event) {
       event.preventDefault();
       thisBooking.sendBooking();
     });
@@ -240,7 +240,7 @@ class Booking {
     thisBooking.datePicker = new DatePicker(thisBooking.dom.datePicker);
     thisBooking.hourPicker = new HourPicker(thisBooking.dom.hourPicker);
 
-    thisBooking.dom.wrapper.addEventListener("updated", function () {
+    thisBooking.dom.wrapper.addEventListener('updated', function () {
       thisBooking.updateDOM();
     });
   }
@@ -249,11 +249,11 @@ class Booking {
     const thisBooking = this;
 
     for (let table of thisBooking.dom.tables) {
-      table.addEventListener("click", function (event) {
+      table.addEventListener('click', function (event) {
         event.preventDefault();
 
-        if (table.classList.contains("booked")) {
-          alert("This table is not available, please choose a different one!");
+        if (table.classList.contains('booked')) {
+          alert('This table is not available, please choose a different one!');
         } else {
           const tableId = parseInt(
             table.getAttribute(settings.booking.tableIdAttribute)
@@ -274,7 +274,7 @@ class Booking {
   removeSelected() {
     const thisBooking = this;
 
-    const selectedTables = document.querySelectorAll(".selected");
+    const selectedTables = document.querySelectorAll('.selected');
 
     for (let selected of selectedTables) {
       selected.classList.remove(classNames.booking.tableSelected);
@@ -285,7 +285,7 @@ class Booking {
   sendBooking() {
     const thisBooking = this;
 
-    const url = settings.db.url + "/" + settings.db.booking;
+    const url = settings.db.url + '/' + settings.db.booking;
 
     const playload = {
       date: thisBooking.datePicker.value,
@@ -304,9 +304,9 @@ class Booking {
       }
     }
     const options = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(playload),
     };
